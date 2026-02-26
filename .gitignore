@@ -1,0 +1,13 @@
+# Konfigurasi & rahasia
+config/
+paswword_user_db_purchase_system.txt
+
+# Database
+*.sql
+
+# Log & cache
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
