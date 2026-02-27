@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if (!isset($_GET['id'])) {
     echo "ID tidak ditemukan";

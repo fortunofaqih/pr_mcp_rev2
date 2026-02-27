@@ -6,6 +6,7 @@
  */
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if ($_SESSION['status'] !== 'login') {
     header('Location: ../../login.php?pesan=belum_login');

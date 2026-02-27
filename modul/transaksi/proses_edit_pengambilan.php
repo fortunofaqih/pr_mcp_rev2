@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_bon     = (int)$_POST['id_bon'];

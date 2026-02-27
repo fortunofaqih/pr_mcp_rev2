@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
-
+include '../../auth/check_session.php';
 /* =======================
    PROTEKSI HALAMAN
 ======================= */
@@ -25,25 +25,17 @@ if (isset($_POST['simpan'])) {
     $role          = $_POST['role'];
     $bagian        = $_POST['bagian'];
 
-    // --- LOGIKA MANUAL INCREMENT ---
-    // Mencari ID tertinggi di tabel users
-    $q_max  = mysqli_query($koneksi, "SELECT MAX(id_user) as max_id FROM users");
-    $r_max  = mysqli_fetch_assoc($q_max);
-    $id_baru = ($r_max['max_id'] ?? 0) + 1;
+    mysqli_query($koneksi, "
+        INSERT INTO users 
+        (username,password,nama_lengkap,role,bagian,status_aktif)
+        VALUES
+        ('$username','$password','$nama_lengkap','$role','$bagian','aktif')
+    ");
 
-    // Masukkan ID secara eksplisit agar tidak jadi 0
-    $query = "INSERT INTO users 
-              (id_user, username, password, nama_lengkap, role, bagian, status_aktif)
-              VALUES
-              ('$id_baru', '$username', '$password', '$nama_lengkap', '$role', '$bagian', 'aktif')";
-
-    if(mysqli_query($koneksi, $query)){
-        header("location:users.php?pesan=berhasil");
-        exit;
-    } else {
-        die("Gagal simpan user: " . mysqli_error($koneksi));
-    }
+    header("location:users.php?pesan=berhasil");
+    exit;
 }
+
 /* =======================
    PROSES UPDATE USER
 ======================= */
@@ -96,7 +88,7 @@ if (isset($_GET['hapus'])) {
 <head>
 <meta charset="UTF-8">
 <title>Manajemen User</title>
-<link rel="icon" type="image/png" href="<?php echo $base_url; ?>assets/img/logo_mcp.png">
+<link rel="icon" type="image/png" href="/pr_mcp/assets/img/logo_mcp.png">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>

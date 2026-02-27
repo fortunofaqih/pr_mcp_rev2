@@ -1,6 +1,6 @@
 <?php
 include '../../config/koneksi.php';
-
+include '../../auth/check_session.php';
 // Pastikan hanya role tertentu yang bisa akses (opsional)
 if ($_SESSION['role'] != "manager" && $_SESSION['role'] != "administrator") {
     echo "<script>alert('Akses Ditolak!'); window.location='../dashboard';</script>";

@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if (!isset($_GET['id'])) {
     exit("<div class='p-4 text-center text-danger'>ID tidak ditemukan.</div>");

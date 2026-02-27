@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 header('Content-Type: application/json');
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {

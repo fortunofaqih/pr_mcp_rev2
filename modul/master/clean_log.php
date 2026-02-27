@@ -1,6 +1,6 @@
 <?php
 include '../../config/koneksi.php';
-
+include '../../auth/check_session.php';
 // Proteksi Keamanan: Hanya Manager atau Administrator yang boleh menghapus log
 if ($_SESSION['role'] != 'manager' && $_SESSION['role'] != 'administrator') {
     header("location:log_activity.php?pesan=akses_ditolak");

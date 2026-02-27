@@ -1,14 +1,17 @@
 <?php
-// Memulai session
 session_start();
+include '../config/koneksi.php';
 
-// Menghapus semua variabel session
+// Hapus session_token dari DB saat logout
+if (isset($_SESSION['id_user'])) {
+    $id_user = (int) $_SESSION['id_user'];
+    mysqli_query($koneksi,
+        "UPDATE users SET session_token=NULL WHERE id_user='$id_user'"
+    );
+}
+
 session_unset();
-
-// Menghancurkan session yang ada
 session_destroy();
 
-// Mengarahkan kembali ke halaman login dengan pesan logout
-header("location:../login.php?pesan=logout");
-exit;
-?>
+header("location:../login.php");
+exit();

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 $id_request   = $_POST['id_request'];
 $tgl_beli     = date('Y-m-d');

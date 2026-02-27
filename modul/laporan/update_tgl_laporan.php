@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = mysqli_real_escape_string($koneksi, $_POST['id']);

@@ -12,6 +12,7 @@
  */
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo '<tr><td colspan="13" class="text-center text-danger">ID tidak valid.</td></tr>';

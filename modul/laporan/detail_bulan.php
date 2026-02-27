@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 // Menangkap filter dari URL, jika tidak ada gunakan bulan & tahun berjalan
 $bulan = isset($_GET['bulan']) ? $_GET['bulan'] : date('m');

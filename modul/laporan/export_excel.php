@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 // 1. Ambil Parameter
 $tgl_mulai   = $_GET['tgl_mulai'] ?? date('Y-m-01');

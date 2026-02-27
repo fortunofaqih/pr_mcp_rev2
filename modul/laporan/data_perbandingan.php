@@ -1,5 +1,6 @@
 <?php
 include "../../config/koneksi.php";
+include '../../auth/check_session.php';
 
 // 1. TANGKAP FILTER (Letakkan di paling atas)
 $alokasi_filter = isset($_GET['alokasi_filter']) ? $_GET['alokasi_filter'] : 'SEMUA';

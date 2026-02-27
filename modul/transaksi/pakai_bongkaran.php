@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if(isset($_POST['proses_ambil'])){
     $id_bongkaran = $_POST['id_bongkaran'];

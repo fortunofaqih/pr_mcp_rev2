@@ -5,6 +5,7 @@
  */
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo '<div class="alert alert-danger">ID tidak valid.</div>'; exit;

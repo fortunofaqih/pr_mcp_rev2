@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 // Tambahkan ini setelah session_start()
 if (!isset($_POST['id_barang']) || !is_numeric($_POST['id_barang'])) {
     header("location:data_barang.php?pesan=error");

@@ -2,9 +2,7 @@
 session_start();
 include 'config/koneksi.php';
 
-/* ======================================
-   CEGAH USER SUDAH LOGIN MASUK LOGIN LAGI
-====================================== */
+// Cegah user yang sudah login masuk lagi
 if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
     header("location:index.php");
     exit;
@@ -16,16 +14,14 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Mutiara Cahaya Plastindo</title>
-    <link rel="icon" type="image/png" href="<?= $base_url; ?>assets/img/logo_mcp.png">
+    <link rel="icon" type="image/png" href="/pr_mcp/assets/img/logo_mcp.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         :root {
             --mcp-blue: #0000FF;
             --mcp-dark: #00008B;
         }
-
         body {
             background-color: #f4f7f6;
             height: 100vh;
@@ -34,7 +30,6 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         .login-card {
             width: 100%;
             max-width: 400px;
@@ -43,19 +38,13 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-
         .card-header {
             background-color: white;
             border-bottom: none;
             padding-top: 30px;
             text-align: center;
         }
-
-        .logo-img {
-            max-width: 120px;
-            margin-bottom: 15px;
-        }
-
+        .logo-img { max-width: 120px; margin-bottom: 15px; }
         .btn-mcp {
             background-color: var(--mcp-blue);
             color: white;
@@ -65,34 +54,26 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
             border-radius: 8px;
             transition: 0.3s;
         }
-
         .btn-mcp:hover {
             background-color: var(--mcp-dark);
             color: white;
             transform: translateY(-2px);
         }
-
-        .form-control {
+        .form-control, .form-select {
             padding: 12px;
             border-radius: 8px;
         }
-
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: var(--mcp-blue);
-            box-shadow: 0 0 0 0.25rem rgba(0, 0, 255, 0.1);
+            box-shadow: 0 0 0 0.25rem rgba(0,0,255,0.1);
         }
-
         .footer-text {
             font-size: 0.85rem;
             color: #666;
             text-align: center;
             margin-top: 20px;
         }
-
-        .password-container {
-            position: relative;
-        }
-
+        .password-container { position: relative; }
         .toggle-password {
             position: absolute;
             right: 15px;
@@ -102,9 +83,11 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
             color: #666;
             z-index: 10;
         }
+        /* Label role dengan ikon kecil */
+        .role-option-manager { color: #0000FF; }
+        .role-option-gudang  { color: #198754; }
     </style>
 </head>
-
 <body>
 
 <div class="login-card card">
@@ -115,29 +98,43 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
     </div>
 
     <div class="card-body px-4 pb-4">
-
         <form action="auth/cek_login.php" method="POST">
 
-            <!-- PESAN ERROR -->
+            <!-- PESAN ERROR / INFO -->
             <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'gagal'): ?>
                 <div class="alert alert-danger text-center small py-2">
-                    USERNAME ATAU PASSWORD SALAH!
+                    <i class="fas fa-times-circle me-1"></i> USERNAME ATAU PASSWORD SALAH!
                 </div>
             <?php endif; ?>
 
             <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'nonaktif'): ?>
                 <div class="alert alert-warning text-center small py-2">
-                    AKUN ANDA TIDAK AKTIF. HUBUNGI ADMINISTRATOR.
+                    <i class="fas fa-ban me-1"></i> AKUN ANDA TIDAK AKTIF. HUBUNGI ADMINISTRATOR.
                 </div>
             <?php endif; ?>
 
+            <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'sesi_ganda'): ?>
+                <div class="alert alert-warning text-center small py-2">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    SESI ANDA DIAKHIRI. Akun ini baru saja login di perangkat lain.
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'akses_ditolak'): ?>
+                <div class="alert alert-danger text-center small py-2">
+                    <i class="fas fa-lock me-1"></i> ANDA TIDAK MEMILIKI AKSES UNTUK ROLE TERSEBUT.
+                </div>
+            <?php endif; ?>
+
+            <!-- USERNAME -->
             <div class="mb-3">
                 <label class="form-label small fw-bold">USERNAME</label>
                 <input type="text" name="username" class="form-control"
                        placeholder="MASUKKAN USERNAME" required autofocus>
             </div>
 
-            <div class="mb-4">
+            <!-- PASSWORD -->
+            <div class="mb-3">
                 <label class="form-label small fw-bold">PASSWORD</label>
                 <div class="password-container">
                     <input type="password" name="password" id="password"
@@ -146,31 +143,57 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 'login') {
                 </div>
             </div>
 
+            <!-- DROPDOWN MASUK SEBAGAI -->
+            <div class="mb-4">
+                <label class="form-label small fw-bold">MASUK SEBAGAI</label>
+                <select name="login_sebagai" class="form-select" required>
+                    <option value="" disabled selected>-- PILIH ROLE --</option>
+                    <option value="administrator">👑 Administrator</option>
+                    <option value="manager">🏢 Manager</option>
+                    <option value="admin_gudang">📦 Admin Gudang</option>
+                    <option value="bagian_pembelian">🛒 Bagian Pembelian</option>
+                </select>
+                <div class="form-text text-muted small">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Pilih sesuai tugas Anda hari ini.
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-mcp w-100">
-                MASUK KE SISTEM
+                <i class="fas fa-sign-in-alt me-2"></i> MASUK KE SISTEM
             </button>
         </form>
 
         <div class="footer-text">
-            &copy; 2026 MUTIARACAHAYA PLASTINDO
+            &copy; <?= date('Y') ?> MUTIARACAHAYA PLASTINDO
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Toggle show/hide password
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.getElementById('eyeIcon');
-
     eyeIcon.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password'
-            ? 'text' : 'password';
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
     });
-</script>
 
+    // Highlight pilihan dropdown sesuai role
+    const roleSelect = document.querySelector('select[name="login_sebagai"]');
+    roleSelect.addEventListener('change', function() {
+        this.style.fontWeight = 'bold';
+        if (this.value === 'manager') {
+            this.style.color = '#0000FF';
+        } else if (this.value === 'admin_gudang') {
+            this.style.color = '#198754';
+        } else {
+            this.style.color = '#333';
+        }
+    });
+</script>
 </body>
 </html>

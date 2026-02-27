@@ -11,6 +11,7 @@
  */
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 header('Content-Type: application/json');
 

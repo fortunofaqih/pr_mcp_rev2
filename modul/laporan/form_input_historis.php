@@ -1,5 +1,6 @@
 <?php
 include "../../config/koneksi.php";
+include '../../auth/check_session.php';
 
 if (isset($_POST['simpan'])) {
     $tgl_beli    = $_POST['tgl_beli'];

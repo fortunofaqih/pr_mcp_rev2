@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 $tgl_dari   = mysqli_real_escape_string($koneksi, $_GET['tgl_dari']   ?? $_GET['tgl'] ?? date('Y-m-d'));
 $tgl_sampai = mysqli_real_escape_string($koneksi, $_GET['tgl_sampai'] ?? $_GET['tgl'] ?? date('Y-m-d'));

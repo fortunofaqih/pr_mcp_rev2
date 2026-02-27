@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 $id = $_GET['id'];
 $q = mysqli_query($koneksi, "SELECT p.*, m.nama_barang, u.nama_lengkap 
      FROM tr_pemusnahan p 

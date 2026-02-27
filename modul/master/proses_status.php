@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 $id     = $_GET['id'];
 $status = $_GET['status'];
 

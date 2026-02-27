@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
-
+include '../../auth/check_session.php';
 // Proteksi Halaman
 if ($_SESSION['status'] != "login" || ($_SESSION['role'] != 'manager' )) {
     header("location:../../login.php?pesan=bukan_pimpinan");

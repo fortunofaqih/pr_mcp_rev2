@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 // Pastikan data dikirim melalui metode POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

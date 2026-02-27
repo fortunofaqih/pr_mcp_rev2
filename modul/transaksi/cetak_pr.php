@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 $id = mysqli_real_escape_string($koneksi, $_GET['id']);
 $query_header = mysqli_query($koneksi, "SELECT * FROM tr_request WHERE id_request = '$id'");

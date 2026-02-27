@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 // 1. Ambil ID dengan aman
 $id_bon = isset($_GET['id']) ? intval($_GET['id']) : 0;

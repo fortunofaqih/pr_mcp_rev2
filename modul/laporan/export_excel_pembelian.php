@@ -1,5 +1,6 @@
 <?php
 include '../../config/koneksi.php';
+include '../../auth/check_session.php';
 
 // Tangkap filter
 $abjad   = isset($_GET['abjad']) ? mysqli_real_escape_string($koneksi, $_GET['abjad']) : '';
